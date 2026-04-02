@@ -1,0 +1,55 @@
+[nama_desa]
+values = Batang Batindih
+
+[metadata]
+sheet_name = ALL
+row_start = 2
+row_end = 6
+col_label = A
+col_value = C
+
+[unique_farmer]
+sheet_name = ALL
+row_start = 12
+row_end = 393
+col_id_petani = H
+col_nama_petani = D
+col_nik = E
+col_jenis_kelamin = G
+
+[unique_land_parcel]
+sheet_name = ALL
+row_start = 12
+row_end = 393
+col_id_petani = H
+col_id_lahan = I
+col_nama_petani = D
+col_nik = E
+col_jenis_kelamin = G
+
+[training]
+sheet_name = ALL
+row_start = 12
+row_end = 393
+col_id_petani = H
+col_nama_petani = D
+col_nik = E
+col_jenis_kelamin = G
+col_bmp_date = BD
+col_bmp_name = BE
+col_bmp_jenis_kelamin = BF
+col_bmp_pre_test = BG
+col_bmp_post_test = BH
+col_bmp_peningkatan = BI
+col_mk_date = BV
+col_mk_name = BW
+col_mk_jenis_kelamin = BX
+col_mk_pre_test = BY
+col_mk_post_test = BZ
+col_mk_penigkatan = CA
+col_k3_date = CB
+col_k3_name = CC
+col_k3_jenis_kelamin = CD
+col_k3_pre_test = CE
+col_k3_post_test = CF
+col_k3_penigkatan = CG

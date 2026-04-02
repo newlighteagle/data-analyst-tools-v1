@@ -236,46 +236,42 @@ elif page == "select model":
             continue
         filtered_rows.append(row)
 
-    for i in range(0, len(filtered_rows), 2):
-        row_cols = st.columns(2)
-        chunk = filtered_rows[i : i + 2]
-        for col, row in zip(row_cols, chunk):
-            model_id = row.get("model_id", "")
-            with col:
-                btn_cols = st.columns([1, 4])
-                with btn_cols[0]:
-                    if st.button("Jalankan", key=f"pick-{model_id}"):
-                        st.session_state.selected_model = model_id
-                        st.session_state.run_model_id = model_id
-                        st.session_state.run_model_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                        update_model_last_run(model_id, st.session_state.run_model_time)
-                        row["last_run"] = st.session_state.run_model_time
-                        if not row.get("status"):
-                            row["status"] = "underdevelopment"
-                        module_path = resolve_module_path(row)
-                        if os.path.exists(module_path):
-                            module = load_module_from_path(module_path)
-                            if hasattr(module, "run_flow"):
-                                st.session_state.run_model_status = module.run_flow(model_id=model_id)
-                            else:
-                                st.session_state.run_model_status = []
-                with btn_cols[1]:
-                    st.markdown(
-                        f"""
-                        <div class="model-card">
-                            <div class="model-title">{model_id}</div>
-                            <div class="model-meta">
-                                <span class="status-chip">status: {row.get("status", "")}</span>
-                                <span class="status-chip">last run: {row.get("last_run", "")}</span>
-                                <span class="status-chip">data: {row.get("data", "")}</span>
-                                <span class="status-chip">district: {row.get("district", "")}</span>
-                                <span class="status-chip">ics: {row.get("ics_id", "")}</span>
-                                <span class="status-chip">ics name: {row.get("ics_name", "")}</span>
-                            </div>
-                        </div>
-                        """,
-                        unsafe_allow_html=True,
-                    )
+    for row in filtered_rows:
+        model_id = row.get("model_id", "")
+        btn_cols = st.columns([1, 6])
+        with btn_cols[0]:
+            if st.button("Jalankan", key=f"pick-{model_id}"):
+                st.session_state.selected_model = model_id
+                st.session_state.run_model_id = model_id
+                st.session_state.run_model_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                update_model_last_run(model_id, st.session_state.run_model_time)
+                row["last_run"] = st.session_state.run_model_time
+                if not row.get("status"):
+                    row["status"] = "underdevelopment"
+                module_path = resolve_module_path(row)
+                if os.path.exists(module_path):
+                    module = load_module_from_path(module_path)
+                    if hasattr(module, "run_flow"):
+                        st.session_state.run_model_status = module.run_flow(model_id=model_id)
+                    else:
+                        st.session_state.run_model_status = []
+        with btn_cols[1]:
+            st.markdown(
+                f"""
+                <div class="model-card">
+                    <div class="model-title">{model_id}</div>
+                    <div class="model-meta">
+                        <span class="status-chip">status: {row.get("status", "")}</span>
+                        <span class="status-chip">last run: {row.get("last_run", "")}</span>
+                        <span class="status-chip">data: {row.get("data", "")}</span>
+                        <span class="status-chip">district: {row.get("district", "")}</span>
+                        <span class="status-chip">ics: {row.get("ics_id", "")}</span>
+                        <span class="status-chip">ics name: {row.get("ics_name", "")}</span>
+                    </div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
 
     st.divider()
     model_row = find_model(st.session_state.selected_model, rows) if st.session_state.selected_model else None

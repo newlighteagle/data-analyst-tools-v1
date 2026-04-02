@@ -1,6 +1,7 @@
-"""Pipeline module for model: petani-it6787-kampar-seigaluh-01.
+"""Pipeline module for model: petani-it6787-kampar-karsem-01.
 
 Step 1: download data from Google Drive based on models/models.csv.
+Step 2: generate output sheets (metadata, unique_farmer, unique_land_parcel, training).
 """
 
 from __future__ import annotations
@@ -330,7 +331,7 @@ def _apply_table_style(writer: pd.ExcelWriter, sheet_name: str) -> None:
 
 
 def get_flow_status(
-    model_id: str = "petani-it6787-kampar-seigaluh-01",
+    model_id: str = "petani-it6787-kampar-karsem-01",
     csv_path: str = DEFAULT_MODEL_CSV,
 ) -> List[Tuple[str, str]]:
     """Return step-by-step status messages for the model flow."""
@@ -348,13 +349,7 @@ def get_flow_status(
         return steps
 
     try:
-        params = _load_params(cfg)
-    except Exception as exc:
-        steps.append(("Failed", f"Load params: {exc}"))
-        return steps
-
-    try:
-        params = _load_params(cfg)
+        _load_params(cfg)
     except Exception as exc:
         steps.append(("Failed", f"Load params: {exc}"))
         return steps
@@ -376,7 +371,7 @@ def get_flow_status(
 
 
 def run_flow(
-    model_id: str = "petani-it6787-kampar-seigaluh-01",
+    model_id: str = "petani-it6787-kampar-karsem-01",
     csv_path: str = DEFAULT_MODEL_CSV,
 ) -> List[Tuple[str, str]]:
     """Run download flow and return step-by-step status messages."""
@@ -409,65 +404,27 @@ def run_flow(
             nama_desa = [x.strip() for x in nama_desa_raw.split(",") if x.strip()]
             steps.append(("Done", f"Nama Desa : {', '.join([repr(x) for x in nama_desa])}"))
             df_metadata = _extract_metadata_airterbit(output_path, params)
-            steps.append(("Done", "Extract Metadata AIR TERBIT"))
-            print("df_metadata")
-            print(df_metadata)
-            df_unique_farmer = _extract_unique_farmer(output_path, params, "unique_farmer_air_terbit")
-            steps.append(("Done", "Extract Unique Farmer AIR TERBIT"))
-            df_unique_farmer_tambusai = _extract_unique_farmer(output_path, params, "unique_farmer_tambusai")
-            steps.append(("Done", "Extract Unique Farmer TAMBUSAI"))
-            df_unique_farmer_bukit = _extract_unique_farmer(output_path, params, "unique_farmer_bukit_kratai")
-            steps.append(("Done", "Extract Unique Farmer BUKIT KRATAI"))
-            df_unique_farmer_deli = _extract_unique_farmer(output_path, params, "unique_farmer_deli_makmur")
-            steps.append(("Done", "Extract Unique Farmer DELI MAKMUR"))
-            df_unique_land = _extract_unique_land_parcel(output_path, params, "unique_land_parcel_air_terbit")
-            steps.append(("Done", "Extract Unique Land Parcel AIR TERBIT"))
-            df_unique_land_tambusai = _extract_unique_land_parcel(output_path, params, "unique_land_parcel_tambusai")
-            steps.append(("Done", "Extract Unique Land Parcel TAMBUSAI"))
-            df_unique_land_bukit = _extract_unique_land_parcel(output_path, params, "unique_land_parcel_bukit_kratai")
-            steps.append(("Done", "Extract Unique Land Parcel BUKIT KRATAI"))
-            df_unique_land_deli = _extract_unique_land_parcel(output_path, params, "unique_land_parcel_deli_makmur")
-            steps.append(("Done", "Extract Unique Land Parcel DELI MAKMUR"))
-            df_training_air = _extract_training(output_path, params, "training_air_terbit")
-            steps.append(("Done", "Extract Training AIR TERBIT"))
-            df_training_tambusai = _extract_training(output_path, params, "training_tambusai")
-            steps.append(("Done", "Extract Training TAMBUSAI"))
-            df_training_bukit = _extract_training(output_path, params, "training_bukit_kratai")
-            steps.append(("Done", "Extract Training BUKIT KRATAI"))
-            df_training_deli = _extract_training(output_path, params, "training_deli_makmur")
-            steps.append(("Done", "Extract Training DELI MAKMUR"))
+            steps.append(("Done", "Extract Metadata"))
+            df_unique_farmer = _extract_unique_farmer(output_path, params, "unique_farmer")
+            steps.append(("Done", "Extract Unique Farmer"))
+            df_unique_land = _extract_unique_land_parcel(output_path, params, "unique_land_parcel")
+            steps.append(("Done", "Extract Unique Land Parcel"))
+            df_training = _extract_training(output_path, params, "training")
+            steps.append(("Done", "Extract Training"))
             try:
                 output_file = _build_output_file_path(cfg)
                 if os.path.exists(output_file):
                     os.remove(output_file)
                     steps.append(("Done", "Output file replaced"))
                 with pd.ExcelWriter(output_file, engine="openpyxl") as writer:
-                    df_metadata.to_excel(writer, index=False, sheet_name="Metadata")
-                    _apply_table_style(writer, "Metadata")
-                    df_unique_farmer.to_excel(writer, index=False, sheet_name="unique-farmer-air-terbit")
-                    _apply_table_style(writer, "unique-farmer-air-terbit")
-                    df_unique_farmer_tambusai.to_excel(writer, index=False, sheet_name="unique-farmer-tambusai")
-                    _apply_table_style(writer, "unique-farmer-tambusai")
-                    df_unique_farmer_bukit.to_excel(writer, index=False, sheet_name="unique-farmer-bukit-kratai")
-                    _apply_table_style(writer, "unique-farmer-bukit-kratai")
-                    df_unique_farmer_deli.to_excel(writer, index=False, sheet_name="unique-farmer-deli-makmur")
-                    _apply_table_style(writer, "unique-farmer-deli-makmur")
-                    df_unique_land.to_excel(writer, index=False, sheet_name="unique-land-air-terbit")
-                    _apply_table_style(writer, "unique-land-air-terbit")
-                    df_unique_land_tambusai.to_excel(writer, index=False, sheet_name="unique-land-tambusai")
-                    _apply_table_style(writer, "unique-land-tambusai")
-                    df_unique_land_bukit.to_excel(writer, index=False, sheet_name="unique-land-bukit-kratai")
-                    _apply_table_style(writer, "unique-land-bukit-kratai")
-                    df_unique_land_deli.to_excel(writer, index=False, sheet_name="unique-land-deli-makmur")
-                    _apply_table_style(writer, "unique-land-deli-makmur")
-                    df_training_air.to_excel(writer, index=False, sheet_name="training-air-terbit")
-                    _apply_table_style(writer, "training-air-terbit")
-                    df_training_tambusai.to_excel(writer, index=False, sheet_name="training-tambusai")
-                    _apply_table_style(writer, "training-tambusai")
-                    df_training_bukit.to_excel(writer, index=False, sheet_name="training-bukit-kratai")
-                    _apply_table_style(writer, "training-bukit-kratai")
-                    df_training_deli.to_excel(writer, index=False, sheet_name="training-deli-makmur")
-                    _apply_table_style(writer, "training-deli-makmur")
+                    df_metadata.to_excel(writer, index=False, sheet_name="metadata")
+                    _apply_table_style(writer, "metadata")
+                    df_unique_farmer.to_excel(writer, index=False, sheet_name="unique_farmer")
+                    _apply_table_style(writer, "unique_farmer")
+                    df_unique_land.to_excel(writer, index=False, sheet_name="unique_land_parcel")
+                    _apply_table_style(writer, "unique_land_parcel")
+                    df_training.to_excel(writer, index=False, sheet_name="training")
+                    _apply_table_style(writer, "training")
                 steps.append(("Done", "Output file created"))
             except Exception as exc:
                 steps.append(("Failed", f"{exc}"))
@@ -497,65 +454,27 @@ def run_flow(
         nama_desa = [x.strip() for x in nama_desa_raw.split(",") if x.strip()]
         steps.append(("Done", f"Nama Desa : {', '.join([repr(x) for x in nama_desa])}"))
         df_metadata = _extract_metadata_airterbit(output_path, params)
-        steps.append(("Done", "Extract Metadata AIR TERBIT"))
-        print("df_metadata")
-        print(df_metadata)
-        df_unique_farmer = _extract_unique_farmer(output_path, params, "unique_farmer_air_terbit")
-        steps.append(("Done", "Extract Unique Farmer AIR TERBIT"))
-        df_unique_farmer_tambusai = _extract_unique_farmer(output_path, params, "unique_farmer_tambusai")
-        steps.append(("Done", "Extract Unique Farmer TAMBUSAI"))
-        df_unique_farmer_bukit = _extract_unique_farmer(output_path, params, "unique_farmer_bukit_kratai")
-        steps.append(("Done", "Extract Unique Farmer BUKIT KRATAI"))
-        df_unique_farmer_deli = _extract_unique_farmer(output_path, params, "unique_farmer_deli_makmur")
-        steps.append(("Done", "Extract Unique Farmer DELI MAKMUR"))
-        df_unique_land = _extract_unique_land_parcel(output_path, params, "unique_land_parcel_air_terbit")
-        steps.append(("Done", "Extract Unique Land Parcel AIR TERBIT"))
-        df_unique_land_tambusai = _extract_unique_land_parcel(output_path, params, "unique_land_parcel_tambusai")
-        steps.append(("Done", "Extract Unique Land Parcel TAMBUSAI"))
-        df_unique_land_bukit = _extract_unique_land_parcel(output_path, params, "unique_land_parcel_bukit_kratai")
-        steps.append(("Done", "Extract Unique Land Parcel BUKIT KRATAI"))
-        df_unique_land_deli = _extract_unique_land_parcel(output_path, params, "unique_land_parcel_deli_makmur")
-        steps.append(("Done", "Extract Unique Land Parcel DELI MAKMUR"))
-        df_training_air = _extract_training(output_path, params, "training_air_terbit")
-        steps.append(("Done", "Extract Training AIR TERBIT"))
-        df_training_tambusai = _extract_training(output_path, params, "training_tambusai")
-        steps.append(("Done", "Extract Training TAMBUSAI"))
-        df_training_bukit = _extract_training(output_path, params, "training_bukit_kratai")
-        steps.append(("Done", "Extract Training BUKIT KRATAI"))
-        df_training_deli = _extract_training(output_path, params, "training_deli_makmur")
-        steps.append(("Done", "Extract Training DELI MAKMUR"))
+        steps.append(("Done", "Extract Metadata"))
+        df_unique_farmer = _extract_unique_farmer(output_path, params, "unique_farmer")
+        steps.append(("Done", "Extract Unique Farmer"))
+        df_unique_land = _extract_unique_land_parcel(output_path, params, "unique_land_parcel")
+        steps.append(("Done", "Extract Unique Land Parcel"))
+        df_training = _extract_training(output_path, params, "training")
+        steps.append(("Done", "Extract Training"))
         try:
             output_file = _build_output_file_path(cfg)
             if os.path.exists(output_file):
                 os.remove(output_file)
                 steps.append(("Done", "Output file replaced"))
             with pd.ExcelWriter(output_file, engine="openpyxl") as writer:
-                df_metadata.to_excel(writer, index=False, sheet_name="Metadata")
-                _apply_table_style(writer, "Metadata")
-                df_unique_farmer.to_excel(writer, index=False, sheet_name="unique-farmer-air-terbit")
-                _apply_table_style(writer, "unique-farmer-air-terbit")
-                df_unique_farmer_tambusai.to_excel(writer, index=False, sheet_name="unique-farmer-tambusai")
-                _apply_table_style(writer, "unique-farmer-tambusai")
-                df_unique_farmer_bukit.to_excel(writer, index=False, sheet_name="unique-farmer-bukit-kratai")
-                _apply_table_style(writer, "unique-farmer-bukit-kratai")
-                df_unique_farmer_deli.to_excel(writer, index=False, sheet_name="unique-farmer-deli-makmur")
-                _apply_table_style(writer, "unique-farmer-deli-makmur")
-                df_unique_land.to_excel(writer, index=False, sheet_name="unique-land-air-terbit")
-                _apply_table_style(writer, "unique-land-air-terbit")
-                df_unique_land_tambusai.to_excel(writer, index=False, sheet_name="unique-land-tambusai")
-                _apply_table_style(writer, "unique-land-tambusai")
-                df_unique_land_bukit.to_excel(writer, index=False, sheet_name="unique-land-bukit-kratai")
-                _apply_table_style(writer, "unique-land-bukit-kratai")
-                df_unique_land_deli.to_excel(writer, index=False, sheet_name="unique-land-deli-makmur")
-                _apply_table_style(writer, "unique-land-deli-makmur")
-                df_training_air.to_excel(writer, index=False, sheet_name="training-air-terbit")
-                _apply_table_style(writer, "training-air-terbit")
-                df_training_tambusai.to_excel(writer, index=False, sheet_name="training-tambusai")
-                _apply_table_style(writer, "training-tambusai")
-                df_training_bukit.to_excel(writer, index=False, sheet_name="training-bukit-kratai")
-                _apply_table_style(writer, "training-bukit-kratai")
-                df_training_deli.to_excel(writer, index=False, sheet_name="training-deli-makmur")
-                _apply_table_style(writer, "training-deli-makmur")
+                df_metadata.to_excel(writer, index=False, sheet_name="metadata")
+                _apply_table_style(writer, "metadata")
+                df_unique_farmer.to_excel(writer, index=False, sheet_name="unique_farmer")
+                _apply_table_style(writer, "unique_farmer")
+                df_unique_land.to_excel(writer, index=False, sheet_name="unique_land_parcel")
+                _apply_table_style(writer, "unique_land_parcel")
+                df_training.to_excel(writer, index=False, sheet_name="training")
+                _apply_table_style(writer, "training")
             steps.append(("Done", "Output file created"))
         except Exception as exc:
             steps.append(("Failed", f"{exc}"))
@@ -566,7 +485,7 @@ def run_flow(
 
 
 def download_data(
-    model_id: str = "petani-it6787-kampar-seigaluh-01",
+    model_id: str = "petani-it6787-kampar-karsem-01",
     csv_path: str = DEFAULT_MODEL_CSV,
 ) -> str:
     """Download Google Drive file for the model and return local path.
