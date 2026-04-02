@@ -1,0 +1,181 @@
+[nama_desa]
+values = AIR TERBIT, Tambusai, Bukit Kratai, Deli Makmur
+
+[metadata]
+sheet_name = AIR TERBIT
+row_start = 2
+row_end = 6
+col_label = A
+col_value = D
+
+[unique_farmer_air_terbit]
+sheet_name = AIR TERBIT
+row_start = 12
+row_end = 396
+col_id_petani = G
+col_nama_petani = C
+col_nik = D
+col_jenis_kelamin = F
+
+[unique_farmer_tambusai]
+sheet_name = Tambusai
+row_start = 12
+row_end = 42
+col_id_petani = G
+col_nama_petani = C
+col_nik = D
+col_jenis_kelamin = F
+
+[unique_farmer_bukit_kratai]
+sheet_name = Bukit Kratai
+row_start = 12
+row_end = 67
+col_id_petani = G
+col_nama_petani = C
+col_nik = D
+col_jenis_kelamin = F
+
+[unique_farmer_deli_makmur]
+sheet_name = Deli Makmur
+row_start = 12
+row_end = 90
+col_id_petani = G
+col_nama_petani = C
+col_nik = D
+col_jenis_kelamin = F
+
+[unique_land_parcel_air_terbit]
+sheet_name = AIR TERBIT
+row_start = 12
+row_end = 396
+col_id_petani = G
+col_id_lahan = H
+col_nama_petani = C
+col_nik = D
+col_jenis_kelamin = F
+
+[unique_land_parcel_tambusai]
+sheet_name = Tambusai
+row_start = 12
+row_end = 42
+col_id_petani = G
+col_id_lahan = H
+col_nama_petani = C
+col_nik = D
+col_jenis_kelamin = F
+
+[unique_land_parcel_bukit_kratai]
+sheet_name = Bukit Kratai
+row_start = 12
+row_end = 67
+col_id_petani = G
+col_id_lahan = H
+col_nama_petani = C
+col_nik = D
+col_jenis_kelamin = F
+
+[unique_land_parcel_deli_makmur]
+sheet_name = Deli Makmur
+row_start = 12
+row_end = 90
+col_id_petani = G
+col_id_lahan = H
+col_nama_petani = C
+col_nik = D
+col_jenis_kelamin = F
+
+[training_air_terbit]
+sheet_name = AIR TERBIT
+row_start = 12
+row_end = 396
+col_id_petani = G
+col_bmp_date = BB
+col_bmp_name = BC
+col_bmp_jenis_kelamin = BD
+col_bmp_pre_test = BE
+col_bmp_post_test = BF
+col_bmp_peningkatan = BG
+col_mk_date = BT
+col_mk_name = BU
+col_mk_jenis_kelamin = BV
+col_mk_pre_test = BW
+col_mk_post_test = BX
+col_mk_penigkatan = BY
+col_k3_date = BZ
+col_k3_name = CA
+col_k3_jenis_kelamin = CB
+col_k3_pre_test = CC
+col_k3_post_test = CD
+col_k3_penigkatan = CE
+
+[training_tambusai]
+sheet_name = Tambusai
+row_start = 12
+row_end = 42
+col_id_petani = G
+col_bmp_date = BB
+col_bmp_name = BC
+col_bmp_jenis_kelamin = BD
+col_bmp_pre_test = BE
+col_bmp_post_test = BF
+col_bmp_peningkatan = BG
+col_mk_date = BT
+col_mk_name = BU
+col_mk_jenis_kelamin = BV
+col_mk_pre_test = BW
+col_mk_post_test = BX
+col_mk_penigkatan = BY
+col_k3_date = BZ
+col_k3_name = CA
+col_k3_jenis_kelamin = CB
+col_k3_pre_test = CC
+col_k3_post_test = CD
+col_k3_penigkatan = CE
+
+[training_bukit_kratai]
+sheet_name = Bukit Kratai
+row_start = 12
+row_end = 67
+col_id_petani = G
+col_bmp_date = BB
+col_bmp_name = BC
+col_bmp_jenis_kelamin = BD
+col_bmp_pre_test = BE
+col_bmp_post_test = BF
+col_bmp_peningkatan = BG
+col_mk_date = BT
+col_mk_name = BU
+col_mk_jenis_kelamin = BV
+col_mk_pre_test = BW
+col_mk_post_test = BX
+col_mk_penigkatan = BY
+col_k3_date = BZ
+col_k3_name = CA
+col_k3_jenis_kelamin = CB
+col_k3_pre_test = CC
+col_k3_post_test = CD
+col_k3_penigkatan = CE
+
+[training_deli_makmur]
+sheet_name = Deli Makmur
+row_start = 12
+row_end = 90
+col_id_petani = G
+col_bmp_date = BB
+col_bmp_name = BC
+col_bmp_jenis_kelamin = BD
+col_bmp_pre_test = BE
+col_bmp_post_test = BF
+col_bmp_peningkatan = BG
+col_mk_date = BT
+col_mk_name = BU
+col_mk_jenis_kelamin = BV
+col_mk_pre_test = BW
+col_mk_post_test = BX
+col_mk_penigkatan = BY
+col_k3_date = BZ
+col_k3_name = CA
+col_k3_jenis_kelamin = CB
+col_k3_pre_test = CC
+col_k3_post_test = CD
+col_k3_penigkatan = CE

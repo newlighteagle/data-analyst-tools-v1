@@ -1,0 +1,6 @@
+pandas
+openpyxl
+requests
+gdown
+tqdm
+streamlit

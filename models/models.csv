@@ -1,0 +1,2 @@
+model_id,params,data,note,district,ics_id,ics_name,source_gd,input_folder,input_name,output_folder,output_name,status,last_run
+petani-it6787-kampar-seigaluh-01,petani-it6787-kampar-seigaluh-01.txt,petani,it6787,kampar,ICS-1406-01,APSS Sei Galuh,https://drive.google.com/open?id=1KCjvlXo2XVafZOJYwzegh8hCBxyhvdHK&usp=drive_copy,data/input/01-petani/01-it-6787/kampar,input-petani-it6787-kampar-seigaluh-01,data/output/01-petani/01-it-6787/kampar,output-petani-it6787-kampar-seigaluh-01,underdevelopment,2026-04-02 08:27:13
