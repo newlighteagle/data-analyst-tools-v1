@@ -22,26 +22,38 @@ Analisa & Kritisi (versi ringkas):
 
 Task (bertahap):
 
-- [ ] Definisikan kontrak modul per model
-  - [ ] Setiap model minimal punya fungsi `extract`, `transform`, `load` atau satu `run(model_config, input_path, output_path)`.
-  - [ ] Lokasi modul: `models/<model_id>.py` atau `models/<data>/<ics_id>/<district>.py` (pilih satu pola).
+- [x] Definisikan kontrak modul per model (versi awal)
+  - [x] Setiap model punya `run_flow`, `get_flow_status`, `download_data`.
+  - [x] Lokasi modul mengikuti pola: `models/<data>/<ics_id>/<district>/<model_id>.py`.
 
-- [ ] Bangun loader `model.csv`
-  - [ ] Parser CSV + validasi kolom wajib: `model_id`, `source_gd`, `input_folder`, `input_name`, `output_folder`, `output_name`.
-  - [ ] Return struktur config yang siap dipakai oleh app.
+- [x] Bangun loader `model.csv`
+  - [x] Parser CSV + validasi kolom wajib: `model_id`, `source_gd`, `input_folder`, `input_name`, `output_folder`, `output_name`.
+  - [x] Return struktur config yang siap dipakai oleh app.
 
-- [ ] Implementasi downloader
-  - [ ] Deteksi tipe URL: Spreadsheet vs .xlsx.
-  - [ ] Untuk Spreadsheet: export ke .xlsx.
-  - [ ] Untuk .xlsx: download langsung.
+- [x] Implementasi downloader
+  - [x] Deteksi tipe URL: Spreadsheet vs .xlsx.
+  - [x] Untuk Spreadsheet: export ke .xlsx.
+  - [x] Untuk .xlsx: download langsung.
 
-- [ ] Buat routing ke modul per model
-  - [ ] `app.py` sebagai entry point.
-  - [ ] Resolve `model_id` -> module -> jalankan pipeline.
+- [x] Buat routing ke modul per model
+  - [x] `app.py` sebagai entry point.
+  - [x] Resolve `model_id` -> module -> jalankan pipeline.
 
-- [ ] Jalankan ETL per model
-  - [ ] Implement minimal 1 contoh modul ETL berbasis `model_id`.
-  - [ ] Output file di `output_folder/output_name.xlsx`.
+- [x] Jalankan ETL per model
+  - [x] Implement minimal 1 contoh modul ETL berbasis `model_id`.
+  - [x] Output file di `output_folder/output_name.xlsx`.
+
+- [x] UI: Select Model
+  - [x] Layout satu baris per model (satu row satu model).
+  - [x] Tombol aksi + kartu metadata ringkas per model.
+
+- [x] Update format output training
+  - [x] Kolom dasar: `ID Petani | Nama | NIK | Jenis Kelamin`.
+  - [x] Detail training: tanggal, nama hadir, jenis kelamin, pre test, post test, kenaikan.
+  - [x] Mendukung format BMP/MK/K3 dan format training generik.
+
+- [x] Tambah model baru
+  - [x] `petani-it6787-kampar-karsem-01` (file modul + params).
 
 - [ ] Tambah logging & error handling
   - [ ] Logging ke console + file log per run (opsional).
