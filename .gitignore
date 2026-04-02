@@ -1,0 +1,8 @@
+.DS_Store
+.venv/
+__pycache__/
+*.pyc
+
+# Data outputs (keep folders, ignore Excel files)
+*.xlsx
+*.xls
